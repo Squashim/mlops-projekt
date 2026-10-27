@@ -3,4 +3,8 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 mlruns/
+mlartifacts/
 .env
+.pytest_cache/
+.ruff_cache/
+optuna.db
