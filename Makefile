@@ -1,9 +1,9 @@
-PYTHON = .venv\Scripts\python.exe
+PYTHON = python
 KATALOGI = src/ tests/
 
 SHELL = cmd.exe
 
-.PHONY: install data lint format test tune train all clean
+.PHONY: install data lint format test tune train all serve clean
 
 install:
 	uv pip install -r requirements.txt
@@ -26,6 +26,9 @@ tune: data
 
 train: data
 	$(PYTHON) -m src.train
+
+serve:
+	$(PYTHON) -m uvicorn src.api:app --host 127.0.0.1 --port 8000 --reload
 
 all: lint test train
 
