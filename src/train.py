@@ -1,14 +1,21 @@
+from pathlib import Path
+
 import mlflow
 import optuna
+import yaml
 from sklearn.ensemble import RandomForestClassifier
 
 from src.data import load_data, split_data
 from src.evaluate import evaluate_model
 
-STORAGE = "sqlite:///optuna.db"
-STUDY_NAME = "klasyfikator-nowotworow"
-TRACKING_URI = "http://127.0.0.1:5000"
-NAZWA_MODELU = "klasyfikator-nowotworow"
+SCIEZKA_KONFIGURACJI = Path(__file__).resolve().parent.parent / "config.yaml"
+with open(SCIEZKA_KONFIGURACJI, encoding="utf-8") as plik:
+    KONFIGURACJA = yaml.safe_load(plik)
+
+STORAGE = KONFIGURACJA["optuna"]["storage"]
+STUDY_NAME = KONFIGURACJA["optuna"]["study_name"]
+TRACKING_URI = KONFIGURACJA["mlflow"]["tracking_uri"]
+NAZWA_MODELU = KONFIGURACJA["model"]["nazwa"]
 
 DOMYSLNE_PARAMETRY = {"n_estimators": 100, "max_depth": 5}
 

@@ -1,0 +1,11 @@
+mlflow:
+  tracking_uri: http://127.0.0.1:5000
+
+model:
+  nazwa: klasyfikator-nowotworow
+  alias: champion
+  liczba_cech: 30
+
+optuna:
+  storage: sqlite:///optuna.db
+  study_name: klasyfikator-nowotworow

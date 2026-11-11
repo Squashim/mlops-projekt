@@ -1,15 +1,23 @@
+import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import mlflow.sklearn
 import numpy as np
+import yaml
 from fastapi import FastAPI
 from mlflow.tracking import MlflowClient
 from pydantic import BaseModel, Field
 
-MLFLOW_URI = "http://127.0.0.1:5000"
-NAZWA_MODELU = "breast_cancer"
-ALIAS_MODELU = "champion"
-LICZBA_CECH = 30
+SCIEZKA_KONFIGURACJI = Path(__file__).resolve().parent.parent / "config.yaml"
+
+with open(SCIEZKA_KONFIGURACJI, encoding="utf-8") as plik:
+    KONFIGURACJA = yaml.safe_load(plik)
+
+MLFLOW_URI = os.getenv("MLFLOW_URI", KONFIGURACJA["mlflow"]["tracking_uri"])
+NAZWA_MODELU = KONFIGURACJA["model"]["nazwa"]
+ALIAS_MODELU = KONFIGURACJA["model"]["alias"]
+LICZBA_CECH = KONFIGURACJA["model"]["liczba_cech"]
 
 
 @asynccontextmanager
